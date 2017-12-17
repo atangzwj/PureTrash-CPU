@@ -26,14 +26,12 @@ module mux16_1_testbench ();
    initial begin
       in = 16'h39CA;
       for (i = 0; i < 16; i++) begin
-         sel = i; #10;
-         assert(out == in[i]);
+         sel = i; #10; assert(out == in[i]);
       end
 
       in = ~in;
       for (i = 0; i < 16; i++) begin
-         sel = i; #10;
-         assert(out == in[i]);
+         sel = i; #10; assert(out == in[i]);
       end
    end
 endmodule

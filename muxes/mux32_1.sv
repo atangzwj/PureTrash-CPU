@@ -26,14 +26,12 @@ module mux32_1_testbench ();
    initial begin
       in = 32'hCA88_F0C3;
       for (i = 0; i < 32; i++) begin
-         sel = i; #10;
-         assert(out == in[i]);
+         sel = i; #10; assert(out == in[i]);
       end
 
       in = ~in;
       for (i = 0; i < 32; i++) begin
-         sel = i; #10;
-         assert(out == in[i]);
+         sel = i; #10; assert(out == in[i]);
       end
    end
 endmodule

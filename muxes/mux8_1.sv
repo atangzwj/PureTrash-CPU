@@ -41,14 +41,12 @@ module mux8_1_testbench ();
    initial begin
       in = 8'hCA;
       for (i = 0; i < 8; i++) begin
-         sel = i; #10;
-         assert(out == in[i]);
+         sel = i; #10; assert(out == in[i]);
       end
 
       in = ~in;
       for (i = 0; i < 8; i++) begin
-         sel = i; #10;
-         assert(out == in[i]);
+         sel = i; #10; assert(out == in[i]);
       end
    end
 endmodule
