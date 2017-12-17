@@ -10,7 +10,7 @@ module mux16_1 (
    mux8_1 m0 (.out(out0), .in(in[7:0]),  .sel(sel[2:0]));
    mux8_1 m1 (.out(out1), .in(in[15:8]), .sel(sel[2:0]));
 
-   mux2_1 mOut (.out, .i0(out0), .i1(out1), .sel(sel[3]));
+   mux2_1 mOut (.out, .in0(out0), .in1(out1), .sel(sel[3]));
 endmodule
 
 module mux16_1_testbench ();
