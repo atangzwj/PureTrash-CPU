@@ -6,11 +6,11 @@ module mux16_1 (
    input  logic  [3:0] sel
 );
 
-   logic out0, out1
+   logic out0, out1;
    mux8_1 m0 (.out(out0), .in(in[7:0]),  .sel(sel[2:0]));
    mux8_1 m1 (.out(out1), .in(in[15:8]), .sel(sel[2:0]));
 
-   mux2_1 mOut (.out, .in0(out0), .in1(out1), .sel(sel[3]));
+   mux2_1 mOut (.out, .i0(out0), .i1(out1), .sel(sel[3]));
 endmodule
 
 module mux16_1_testbench ();
@@ -23,6 +23,11 @@ module mux16_1_testbench ();
    integer i;
    initial begin
       in = 16'h39CA;
+      for (i = 0; i < 16; i++) begin
+         sel = i; #10;
+         assert(out == in[i]);
+      end
+      in = ~in;
       for (i = 0; i < 16; i++) begin
          sel = i; #10;
          assert(out == in[i]);

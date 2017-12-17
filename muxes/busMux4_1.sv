@@ -7,10 +7,25 @@ module busMux4_1 #(parameter WIDTH = 64) (
 );
 
    logic [WIDTH - 1 : 0] out0, out1;
-   busMux2_1 #(.WIDTH) bm0 (.out(out0), .in0(in[0]), .in1(in[1]), sel(sel[0]));
-   busMux2_1 #(.WIDTH) bm1 (.out(out1), .in0(in[2]), .in1(in[3]), sel(sel[0]));
+   busMux2_1 #(.WIDTH(WIDTH)) bm0 (
+      .out(out0),
+      .in0(in[0]),
+      .in1(in[1]),
+      .sel(sel[0])
+   );
+   busMux2_1 #(.WIDTH(WIDTH)) bm1 (
+      .out(out1),
+      .in0(in[2]),
+      .in1(in[3]),
+      .sel(sel[0])
+   );
 
-   busMux2_1 #(.WIDTH) bmOut (.out, .in0(out0), .in1(out1), .sel(sel[1]));
+   busMux2_1 #(.WIDTH(WIDTH)) bmOut (
+      .out,
+      .in0(out0),
+      .in1(out1),
+      .sel(sel[1])
+   );
 endmodule
 
 module busMux4_1_testbench ();
