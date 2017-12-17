@@ -10,7 +10,7 @@ module busMux2_1 #(parameter WIDTH = 64) (
    genvar i;
    generate
       for (i = 0; i < WIDTH; i++) begin : muxes
-         mux2_1 m (.out(out[i]), .i0(in0[i]), .i1(in1[i]), .sel);
+         mux2_1 m (.out(out[i]), .in0(in0[i]), .in1(in1[i]), .sel);
       end
    endgenerate
 endmodule
