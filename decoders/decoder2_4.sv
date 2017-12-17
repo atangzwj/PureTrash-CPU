@@ -14,8 +14,8 @@ module decoder2_4 (
 
    and #DELAY d0 (d[0], en, seln[1], seln[0]);
    and #DELAY d1 (d[1], en, seln[1], sel[0]);
-   and #DELAY d2 (d[0], en, sel[1],  seln[0]);
-   and #DELAY d3 (d[0], en, sel[1],  sel[0]);
+   and #DELAY d2 (d[2], en, sel[1],  seln[0]);
+   and #DELAY d3 (d[3], en, sel[1],  sel[0]);
 endmodule
 
 module decoder2_4_testbench ();
@@ -30,11 +30,13 @@ module decoder2_4_testbench ();
       en = 1'b0;
       for (i = 0; i < 4; i++) begin
          sel = i; #10;
+         assert(d == 4'b0000);
       end
       sel = 2'b00;
       en = 1'b1;
       for (i = 0; i < 4; i++) begin
          sel = i; #10;
+         assert(d == 4'b0001 << i);
       end
    end
 endmodule

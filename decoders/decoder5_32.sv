@@ -33,11 +33,13 @@ module decoder5_32_testbench ();
       en = 1'b0;
       for (i = 0; i < 32; i++) begin
          sel = i; #10;
+         assert(d == 32'h0000_0000);
       end
       sel = 5'b00000;
       en = 1'b1;
       for (i = 0; i < 32; i++) begin
          sel = i; #10;
+         assert(d == 32'h0000_0001 << i);
       end
    end
 endmodule

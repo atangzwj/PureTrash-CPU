@@ -35,11 +35,13 @@ module decoder3_8_testbench ();
       en = 1'b0;
       for (i = 0; i < 8; i++) begin
          sel = i; #10;
+         assert(d == 8'h00);
       end
       sel = 2'b00;
       en = 1'b1;
       for (i = 0; i < 8; i++) begin
          sel = i; #10;
+         assert(d == 8'h01 << i);
       end
    end
 endmodule
