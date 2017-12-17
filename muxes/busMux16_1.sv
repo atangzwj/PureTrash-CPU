@@ -35,7 +35,7 @@ module busMux16_1_testbench ();
 
       in = ~in;
       for (i = 0; i < 16; i++) begin
-         sel = i; #10; assert(out == in[i]));
+         sel = i; #10; assert(out == in[i]);
       end
    end
 endmodule

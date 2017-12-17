@@ -33,12 +33,12 @@ module busMux32_1_testbench ();
       in[24] = 12'h718; in[25] = 12'h1C4; in[26] = 12'hA3A; in[27] = 12'h86A;
       in[28] = 12'h89F; in[29] = 12'h2E3; in[30] = 12'h1EE; in[31] = 12'hCA8;
 
-      for (i = 0; i < 64; i++) begin
+      for (i = 0; i < 32; i++) begin
          sel = i; #10; assert(out == in[i]);
       end
 
       in = ~in;
-      for (i = 0; i < 64; i++) begin
+      for (i = 0; i < 32; i++) begin
          sel = i; #10; assert(out == in[i]);
       end
    end
