@@ -6,11 +6,19 @@ module mux4_1 (
    input  logic [1:0] sel
 );
 
-   logic out0, out1;
-   mux2_1 m0 (.out(out0), .i0(in[0]), .i1(in[1]), .sel(sel[0]));
-   mux2_1 m1 (.out(out1), .i0(in[2]), .i1(in[3]), .sel(sel[0]));
+   parameter DELAY = 0.05;
 
-   mux2_1 mOut (.out, .i0(out0), .i1(out1), .sel(sel[1]));
+   logic [1:0] seln;
+   not #DELAY n0 (seln[0], sel[0]);
+   not #DELAY n1 (seln[1], sel[1]);
+
+   logic out0, out1, out2, out3;
+   and #DELAY a0 (out0, in[0], seln[1], seln[0]);
+   and #DELAY a1 (out1, in[1], seln[1], sel[0]);
+   and #DELAY a2 (out2, in[2], sel[1],  seln[0]);
+   and #DELAY a3 (out3, in[3], sel[1],  sel[0]);
+
+   or #DELAY o (out, out0, out1, out2, out3);
 endmodule
 
 module mux4_1_testbench ();
