@@ -26,12 +26,12 @@ module busMux2_1_testbench ();
    initial begin
       in0  = 16'hCA35;
       in1  = 16'hE6F2;
-      sel = 1'b0; #10;
-      sel = 1'b1; #10;
+      sel = 1'b0; #10; assert(out == in0);
+      sel = 1'b1; #10; assert(out == in1);
 
       in0 = ~in0;
       in1 = ~in1;
-      sel = 1'b0; #10;
-      sel = 1'b1; #10;
+      sel = 1'b0; #10; assert(out == in0);
+      sel = 1'b1; #10; assert(out == in1);
    end
 endmodule

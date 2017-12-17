@@ -10,8 +10,8 @@ module busMux4_1 #(parameter WIDTH = 64) (
    generate
       for (i = 0; i < WIDTH; i++) begin : muxes
          logic [3:0] slice; // Store the ith bit of each input bus
-         slice = {in[3][i], in[2][i], in[1][i], i[0][i]};
-         mux4_1 m (.out(out[i]), .in(slice), sel);
+         assign slice = {in[3][i], in[2][i], in[1][i], in[0][i]};
+         mux4_1 m (.out(out[i]), .in(slice), .sel);
       end
    endgenerate
 endmodule
@@ -31,7 +31,12 @@ module busMux4_1_testbench ();
       in[3] = 16'hCDEF;
 
       for (i = 0; i < 4; i++) begin
-         sel = i; #10;
+         sel = i; #10; assert(out == in[i]);
+      end
+      
+      in = ~in;
+      for (i = 0; i < 4; i++) begin
+         sel = i; #10; assert(out == in[i]);
       end
    end
 endmodule
