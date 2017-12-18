@@ -15,7 +15,7 @@ module register #(parameter WIDTH = 64) (
       // D_ffs hold data
       for (i = 0; i < WIDTH; i++) begin : ffs
          mux2_1 mux (.out(dIn[i]), .in0(dOut[i]), .in1(wrData[i]), .sel(wrEn));
-         d_ff dff (.q(dOut[i]), .d(wrData[i]), .reset(1'b0), .clk);
+         d_ff dff (.q(dOut[i]), .d(dIn[i]), .reset, .clk);
       end
    endgenerate
 endmodule
@@ -24,9 +24,10 @@ module register_testbench ();
    logic [23:0] dOut;
    logic [23:0] wrData;
    logic        wrEn;
+   logic        reset;
    logic        clk;
 
-   register dut (.dOut, .wrData, .wrEn, .clk);
+   register #(.WIDTH(24)) dut (.dOut, .wrData, .wrEn, .reset, .clk);
 
    parameter CLK_PER = 10;
    initial begin
@@ -42,7 +43,10 @@ module register_testbench ();
                                           @(posedge clk);
                                           @(posedge clk);
                                           @(posedge clk);
-      wrData <= 24'h00FF00; wrEn <= 1'b1; @(posedge clk);
+      wrData <= 24'h00FF00;               @(posedge clk);
+                                          @(posedge clk);
+                                          @(posedge clk);
+                            wrEn <= 1'b1; @(posedge clk);
                             wrEn <= 1'b0; @(posedge clk);
                                           @(posedge clk);
                                           @(posedge clk);
@@ -53,6 +57,8 @@ module register_testbench ();
                                           @(posedge clk);
                                           @(posedge clk);
                                           @(posedge clk);
+      reset <= 1'b1;                      @(posedge clk);
+      reset <= 1'b0;                      @(posedge clk);
       $stop;
    end
 endmodule
