@@ -1,6 +1,8 @@
 # ModelSim Files
 work/
 *.wlf
+transcript
+*.bat
 
 # Vim swp files
 *.swp
