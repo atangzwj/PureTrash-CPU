@@ -33,6 +33,7 @@ module regfile_testbench ();
    // Print %t's in a nice format
    initial $timeformat(-9, 2, " ns", 10);
 
+   integer i;
    initial begin
       // Try to write the value 0xA0 into register 31.
       // Register 31 should always be 0
