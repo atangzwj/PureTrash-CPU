@@ -9,8 +9,8 @@ module halfAdder (
 
    parameter DELAY = 0.05;
 
-   xor #DELAY x (sum,  a, b);
-   and #DELAY a (cOut, a, b);
+   xor #DELAY x0 (sum,  a, b);
+   and #DELAY a0 (cOut, a, b);
 endmodule
 
 module halfAdder_testbench ();
