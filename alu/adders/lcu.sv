@@ -41,7 +41,7 @@ module lcu (
 
    and #DELAY a9 (pg, p[0], p[1], p[2], p[3]);
 
-   and #DELAY aX (tX, c[0], pg);
+   and #DELAY aX (tX, cIn, pg);
    or  #DELAY o4 (cOut, gg, tX);
 endmodule
 
