@@ -24,13 +24,15 @@ vlog "../muxes/busMux8_1.sv"
 vlog "../muxes/busMux16_1.sv"
 vlog "../muxes/busMux32_1.sv"
 
-vlog "../alu/adders/halfAdder.sv"
-vlog "../alu/adders/fullAdder.sv"
-vlog "../alu/adders/spg.sv"
-vlog "../alu/adders/lcu.sv"
-vlog "../alu/adders/cla4.sv"
-vlog "../alu/adders/cla16.sv"
-vlog "../alu/adders/cla64.sv"
+vlog "../math/adders/halfAdder.sv"
+vlog "../math/adders/fullAdder.sv"
+vlog "../math/adders/spg.sv"
+vlog "../math/adders/lcu.sv"
+vlog "../math/adders/cla4.sv"
+vlog "../math/adders/cla16.sv"
+vlog "../math/adders/cla64.sv"
+
+vlog "../math/alu/alu_testbench.sv"
 
 # Call vsim to invoke simulator
 #    Make sure the last item on the line is the name of the
