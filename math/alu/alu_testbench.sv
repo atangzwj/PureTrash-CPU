@@ -52,7 +52,7 @@ module alu_testbench ();
          #(DELAY);
          assert(aluOut == B && negative == B[63] && zero == (B == '0));
       end
-      
+
       $display("%t testing addition", $time);
       ctrl = ALU_ADD;
       A = 64'h0000000000000001; B = 64'h0000000000000001;
@@ -63,10 +63,10 @@ module alu_testbench ();
       /* Our Test Cases */
       A = 64'h7FFFFFFFFFFFFFFF; B = 64'h0000000000000001; // Carry to top bit
       #(DELAY);
-      assert(carryOut == 0 && overflow == 1 && negative == 1 && zero == 0);      
+      assert(carryOut == 0 && overflow == 1 && negative == 1 && zero == 0);
       A = 64'hFFFFFFFFFFFFFFFF; B = 64'h0000000000000001; // Carry through
       #(DELAY);
-      assert(carryOut == 1 && overflow == 0 && negative == 0 && zero == 1);      
+      assert(carryOut == 1 && overflow == 0 && negative == 0 && zero == 1);
       A = -64'd12; B = 64'd12; // Sum to 0
       #(DELAY);
       assert(aluOut == 0 && carryOut == 1 && overflow == 0 && negative == 0
@@ -82,7 +82,7 @@ module alu_testbench ();
          #(DELAY);
          assert(aluOut == A + B);
       end
-      
+
       $display("%t testing subtraction", $time);
       ctrl = ALU_SUBTRACT;
       A = 64'd0; B = 64'd0;
@@ -110,7 +110,7 @@ module alu_testbench ();
          assert(aluOut == A - B);
       end
 
-      $display("%t testing and", $time);      
+      $display("%t testing and", $time);
       ctrl = ALU_AND;
 
       A = 64'h0000000000000000;
@@ -130,8 +130,8 @@ module alu_testbench ();
          #(DELAY);
          assert(aluOut == (A & B));
       end
-      
-      $display("%t testing or", $time);      
+
+      $display("%t testing or", $time);
       ctrl = ALU_OR;
 
       A = 64'h0000000000000000;
@@ -145,14 +145,14 @@ module alu_testbench ();
       A = 64'hAAAAAAAAAAAAAAAA;
       B = 64'h5555555555555555; #(DELAY);
       assert(aluOut == (A | B));
-      
+
       for (i=0; i<10; i++) begin
          A = $random(); B = $random();
          #(DELAY);
-         assert(aluOut == (A | B)); 
+         assert(aluOut == (A | B));
       end
-      
-      $display("%t testing xor", $time);      
+
+      $display("%t testing xor", $time);
       ctrl = ALU_XOR;
 
       A = 64'h0000000000000000;
@@ -166,7 +166,7 @@ module alu_testbench ();
       A = 64'hAAAAAAAAAAAAAAAA;
       B = 64'h5555555555555555; #(DELAY);
       assert(aluOut == (A ^ B));
-      
+
       for (i=0; i<10; i++) begin
          A = $random(); B = $random();
          #(DELAY);
