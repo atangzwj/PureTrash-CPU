@@ -53,8 +53,8 @@ module alu4_testbench ();
       A = 4'hA; B = 4'hC; #10; assert(aluOut == B);
       A = ~A;   B = ~B;   #10; assert(aluOut == B);
 
-      cIn = 1'b0;
       ctrl = ALU_ADD;
+      cIn  = ctrl[0];
       A = 4'h1; B = 4'h1; #10; // Simple addition
       assert(aluOut == 4'h2 && cOut == 1'b0);
 
@@ -72,5 +72,45 @@ module alu4_testbench ();
 
       A = 4'hF; B = 4'hF; #10; // Largest inputs
       assert(aluOut == 4'hE && cOut == 1'b1);
+
+      ctrl = ALU_SUBTRACT;
+      A = 4'h1; B = 4'h1; #10;
+      assert(aluOut == 4'h0 && cOut == 1'b1);
+
+      A = 4'h8; B = 4'h1; #10;
+      assert(aluOut == 4'h7 && cOut == 1'b1);
+
+      A = 4'h6; B = 4'hA; #10;
+      assert(aluOut == 4'hC && cOut == 1'b0);
+
+      ctrl = ALU_AND;
+      A = 4'h0; B = 4'h0; #10;
+      assert(aluOut == A & B);
+
+      A = 4'hF; B = 4'hF; #10;
+      assert(aluOut == A & B);
+
+      A = 4'hA; B = 4'h5; #10;
+      assert(aluOut == A & B);
+
+      ctrl = ALU_OR;
+      A = 4'h0; B = 4'h0; #10;
+      assert(aluOut == A | B);
+
+      A = 4'hF; B = 4'hF; #10;
+      assert(aluOut == A | B);
+
+      A = 4'hA; B = 4'h5; #10;
+      assert(aluOut == A | B);
+
+      ctrl = ALU_XOR;
+      A = 4'h0; B = 4'h0; #10;
+      assert(aluOut == A ^ B);
+
+      A = 4'hF; B = 4'hF; #10;
+      assert(aluOut == A ^ B);
+
+      A = 4'hA; B = 4'h5; #10;
+      assert(aluOut == A ^ B);
    end
 endmodule
