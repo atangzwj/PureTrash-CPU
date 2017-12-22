@@ -48,13 +48,14 @@ module alu4_testbench ();
    ALU_OR       = 3'b101,
    ALU_XOR      = 3'b110;
 
+   assign cIn = ctrl[0];
    initial begin
       ctrl = ALU_PASS_B;
       A = 4'hA; B = 4'hC; #10; assert(aluOut == B);
       A = ~A;   B = ~B;   #10; assert(aluOut == B);
 
       ctrl = ALU_ADD;
-      cIn  = ctrl[0];
+      //cIn  = ctrl[0];
       A = 4'h1; B = 4'h1; #10; // Simple addition
       assert(aluOut == 4'h2 && cOut == 1'b0);
 
@@ -85,32 +86,32 @@ module alu4_testbench ();
 
       ctrl = ALU_AND;
       A = 4'h0; B = 4'h0; #10;
-      assert(aluOut == A & B);
+      assert(aluOut == (A & B));
 
       A = 4'hF; B = 4'hF; #10;
-      assert(aluOut == A & B);
+      assert(aluOut == (A & B));
 
       A = 4'hA; B = 4'h5; #10;
-      assert(aluOut == A & B);
+      assert(aluOut == (A & B));
 
       ctrl = ALU_OR;
       A = 4'h0; B = 4'h0; #10;
-      assert(aluOut == A | B);
+      assert(aluOut == (A | B));
 
       A = 4'hF; B = 4'hF; #10;
-      assert(aluOut == A | B);
+      assert(aluOut == (A | B));
 
       A = 4'hA; B = 4'h5; #10;
-      assert(aluOut == A | B);
+      assert(aluOut == (A | B));
 
       ctrl = ALU_XOR;
       A = 4'h0; B = 4'h0; #10;
-      assert(aluOut == A ^ B);
+      assert(aluOut == (A ^ B));
 
       A = 4'hF; B = 4'hF; #10;
-      assert(aluOut == A ^ B);
+      assert(aluOut == (A ^ B));
 
       A = 4'hA; B = 4'h5; #10;
-      assert(aluOut == A ^ B);
+      assert(aluOut == (A ^ B));
    end
 endmodule
