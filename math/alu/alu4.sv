@@ -40,6 +40,7 @@ module alu4_testbench ();
    logic [2:0] ctrl;
 
    alu4 dut (.aluOut, .cOut, .pg, .gg, .A, .B, .cIn, .ctrl);
+
    parameter
    ALU_PASS_B   = 3'b000,
    ALU_ADD      = 3'b010,
@@ -55,7 +56,6 @@ module alu4_testbench ();
       A = ~A;   B = ~B;   #10; assert(aluOut == B);
 
       ctrl = ALU_ADD;
-      //cIn  = ctrl[0];
       A = 4'h1; B = 4'h1; #10; // Simple addition
       assert(aluOut == 4'h2 && cOut == 1'b0);
 
