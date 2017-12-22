@@ -15,7 +15,7 @@ module cla64 (
 
    genvar i;
    generate
-      for (i = 0; i < 4; i++) begin adders
+      for (i = 0; i < 4; i++) begin : adders
          cla16 adder (
             .s(s[(16*i+15):(16*i)]),
             .cOut(),
@@ -47,7 +47,7 @@ module cla64_testbench ();
       b = 64'h0000000000000001; #10;
       a = 64'hFFFFFFFFFFFFFFFF; // Carry through
       b = 64'h0000000000000001; #10;
-      a = 64'hCFFFFFFFFFFF0000; // Carry out
+      a = 64'hFFFFFFFFFFFF0000; // Carry out
       b = 64'h000000000001CCAA; #10;
       a = 64'hCCCCCCCCCCCCCCCC; // Sum to 0
       b = 64'h3333333333333334; #10;
