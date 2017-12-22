@@ -6,7 +6,7 @@ module cla4 (
    output logic       pg,
    output logic       gg,
    input  logic [3:0] a,
-   input  logic [3:0] b
+   input  logic [3:0] b,
    input  logic       cIn
 );
 
@@ -25,17 +25,25 @@ endmodule
 
 module cla4_testbench ();
    logic [3:0] s;
-   logic       pg, gg;
+   logic       cOut, pg, gg;
    logic [3:0] a, b;
    logic       cIn;
 
-   cla4 dut (.s, .pg, .gg, .a, .b, .cIn);
+   cla4 dut (.s, .cOut, .pg, .gg, .a, .b, .cIn);
 
    integer i, j;
    initial begin
+      cIn = 1'b0;
       for (i = 0; i < 16; i++) begin
          for (j = 0; j < 16; j++) begin
-            a = i; b = j; #10; assert(s == a + b);
+            a = i; b = j; #10;
+         end
+      end
+
+      cIn = 1'b1;
+      for (i = 0; i < 16; i++) begin
+         for (j = 0; j < 16; j++) begin
+            a = i; b = j; #10;
          end
       end
    end
