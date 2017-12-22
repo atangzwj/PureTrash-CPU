@@ -23,7 +23,7 @@ module cla16 (
             .gg(g[i]),
             .a(a[(4*i+3):(4*i)]),
             .b(b[(4*i+3):(4*i)]),
-            cIn(c[i])
+            .cIn(c[i])
          );
       end
    endgenerate
@@ -40,10 +40,20 @@ module cla16_testbench ();
    cla16 dut (.s, .cOut, .pg, .gg, .a, .b, .cIn);
 
    initial begin
+      cIn = 1'b0;
       a = 16'h0001; b = 16'h0001; #10; // Simple addition
       a = 16'h7FFF; b = 16'h0001; #10; // Carry to top bit
       a = 16'hFFFF; b = 16'h0001; #10; // Carry through
       a = 16'hC000; b = 16'h4CA8; #10; // Carry out
-      a = 16'hCCCC; b = 16'h4445; #10; // Sum to 0
+      a = 16'hCCCC; b = 16'h3334; #10; // Sum to 0
+      a = 16'hFFFF; b = 16'hFFFF; #10; // Largest inputs
+      
+      cIn = 1'b1;
+      a = 16'h0001; b = 16'h0001; #10; // Simpla addition
+      a = 16'h7FFE; b = 16'h0001; #10; // Carry to top bit
+      a = 16'hFFFE; b = 16'h0001; #10; // Carry through
+      a = 16'hC000; b = 16'h4CA7; #10; // Carry out
+      a = 16'hCCCC; b = 16'h3333; #10; // Sum to 0
+      a = 16'hFFFF; b = 16'hFFFF; #10; // Largest inputs
    end
 endmodule
