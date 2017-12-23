@@ -24,6 +24,8 @@ vlog "../muxes/busMux8_1.sv"
 vlog "../muxes/busMux16_1.sv"
 vlog "../muxes/busMux32_1.sv"
 
+vlog "../math/nor64.sv"
+
 vlog "../math/adders/halfAdder.sv"
 vlog "../math/adders/fullAdder.sv"
 vlog "../math/adders/spg.sv"
@@ -33,11 +35,16 @@ vlog "../math/adders/cla16.sv"
 vlog "../math/adders/cla64.sv"
 
 vlog "../math/alu/alu_testbench.sv"
+vlog "../math/alu/alu1.sv"
+vlog "../math/alu/alu4.sv"
+vlog "../math/alu/alu16.sv"
+vlog "../math/alu/alu64.sv"
+vlog "../math/alu/alu.sv"
 
 # Call vsim to invoke simulator
 #    Make sure the last item on the line is the name of the
 #    testbench module you want to execute.
-vsim -voptargs="+acc" -t 1ps -lib work cla64_testbench
+vsim -voptargs="+acc" -t 1ps -lib work alu_testbench
 
 # Source the wave do file
 #    This should be the file that sets up the signal window for
