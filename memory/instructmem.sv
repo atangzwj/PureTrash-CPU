@@ -4,7 +4,7 @@
 // word-aligned (bottom two bits of the address must be 0).
 //
 // To change the file that is loaded, edit the filename here:
-`define BENCHMARK "./CPU/benchmarks/test00_oneInstr.arm"
+`define BENCHMARK "../memory/benchmarks/test00_oneInstr.arm"
 //`define BENCHMARK "./CPU/benchmarks/test0a_X31Fwd.arm"
 //`define BENCHMARK "./CPU/benchmarks/test0b_Movk.arm"
 //`define BENCHMARK "./CPU/benchmarks/test01_AddiB.arm"
@@ -26,8 +26,8 @@
 `define INSTRUCT_MEM_SIZE 1024
 
 module instructmem (
-   output logic [31:0] instruction,
-   input  logic [63:0] address,
+   output logic [31:0] instr,
+   input  logic [63:0] addr,
    input  logic        clk // Memory is combinational, but used for
 );                         // error-checking
 
@@ -43,12 +43,12 @@ module instructmem (
    // Make sure accesses are reasonable
    always_ff @ (posedge clk) begin
       // Address or size could be all X's at startup, so ignore this case
-      if (address !== 'x) begin
+      if (addr !== 'x) begin
          // Makes sure address is aligned
-         assert(address[1:0] == 0);
+         assert(addr[1:0] == 0);
 
          // Make sure address in bounds
-         assert(address + 3 < `INSTRUCT_MEM_SIZE);
+         assert(addr + 3 < `INSTRUCT_MEM_SIZE);
       end
    end
 
@@ -64,17 +64,19 @@ module instructmem (
    // Handle the reads
    integer i;
    always_comb begin
-      if (address + 3 >= `INSTRUCT_MEM_SIZE) instruction = 'x;
-      else                                   instruction = mem[address/4];
+      if (addr + 3 >= `INSTRUCT_MEM_SIZE)
+         instr = 'x;
+      else
+         instr = mem[addr/4];
    end
 endmodule
 
 module instructmem_testbench ();
-   logic [31:0] instruction;
-   logic [63:0] address;
+   logic [31:0] instr;
+   logic [63:0] addr;
    logic        clk;
 
-   instructmem dut (.instruction, .address, .clk);
+   instructmem dut (.instr, .addr, .clk);
 
    parameter CLK_PER = 5000;
    initial begin // Set up the clock
@@ -85,8 +87,8 @@ module instructmem_testbench ();
    integer i;
    initial begin
       // Read every location, including just past the end of the memory
-      for (i=0; i <= `INSTRUCT_MEM_SIZE; i = i + 4) begin
-         address <= i; @(posedge clk); 
+      for (i = 0; i <= `INSTRUCT_MEM_SIZE; i = i + 4) begin
+         addr <= i; @(posedge clk); 
       end
       $stop;
    end

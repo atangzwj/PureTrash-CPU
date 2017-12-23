@@ -34,16 +34,16 @@ module datamem (
 
    // Make sure accesses are reasonable
    always_ff @ (posedge clk) begin
-      // address or size could be all X's at startup, so ignore this case
+      // Address or size could be all X's at startup, so ignore this case
       if (addr !== 'x && (writeEnable || readEnable)) begin
          // Makes sure address is aligned.
-         assert((address & (xfer_size - 1)) == 0);
+         assert((addr & (xferSize - 1)) == 0);
 
          // Make sure size is a power of 2
-         assert((xfer_size & (xfer_size-1)) == 0);
+         assert((xferSize & (xferSize-1)) == 0);
 
          // Make sure address in bounds
-         assert(address + xfer_size <= `DATA_MEM_SIZE);
+         assert(addr + xferSize <= `DATA_MEM_SIZE);
       end
    end
 
@@ -54,11 +54,11 @@ module datamem (
    logic [63:0] alignedAddr;
    always_comb begin
       case (xferSize)
-         1:       alignedAddr =  address;
-         2:       alignedAddr = {address[63:1], 1'b0};
-         4:       alignedAddr = {address[63:2], 2'b00};
-         8:       alignedAddr = {address[63:3], 3'b000};
-         default: alignedAddr = {address[63:3], 3'b000};
+         1:       alignedAddr =  addr;
+         2:       alignedAddr = {addr[63:1], 1'b0};
+         4:       alignedAddr = {addr[63:2], 2'b00};
+         8:       alignedAddr = {addr[63:3], 3'b000};
+         default: alignedAddr = {addr[63:3], 3'b000};
          // Bad addresses forced to double-word aligned
       endcase
    end
@@ -87,13 +87,13 @@ module datamem (
 endmodule
 
 module datamem_testbench ();
-   logic [63:0] readData,
-   logic [63:0] addr,
-   logic [63:0] writeData,
-   logic        writeEnable,
-   logic        readEnable,
-   logic  [3:0] xferSize,
-   logic        clk
+   logic [63:0] readData;
+   logic [63:0] addr;
+   logic [63:0] writeData;
+   logic        writeEnable;
+   logic        readEnable;
+   logic  [3:0] xferSize;
+   logic        clk;
 
    datamem dut (
       .readData,
@@ -120,7 +120,7 @@ module datamem_testbench ();
    logic        rand_we;
    
    initial begin
-      address     <= '0;
+      addr        <= '0;
       readEnable  <= '0;
       writeEnable <= '0;
       writeData   <= 'x;
@@ -137,7 +137,7 @@ module datamem_testbench ();
          writeEnable <= rand_we;
          readEnable  <= ~rand_we;
          xferSize    <= randSize;
-         address     <= randAddr;
+         addr        <= randAddr;
          writeData   <= randData;
 
          @(posedge clk); // Do the xfer.
@@ -149,7 +149,7 @@ module datamem_testbench ();
          end else begin // Verify reads.
             for (j = 0; j < randSize; j++) begin
                // === will return true when comparing X's.
-               assert(testData[randAddr+j] === read_data[8*j+7 -: 8]);
+               assert(testData[randAddr+j] === readData[8*j+7 -: 8]);
             end
          end
       end
