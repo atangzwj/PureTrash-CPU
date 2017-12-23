@@ -53,8 +53,9 @@ module alu64_testbench ();
    assign cIn = ctrl[0];
    initial begin
       ctrl = ALU_PASS_B;
-      A = 64'hAAAA; B = 64'hCCCC; #10; assert(aluOut == B);
-      A = ~A;       B = ~B;       #10; assert(aluOut == B);
+      A = 64'hAAAA_3456_CA33_EECC;
+      B = 64'hCCAA_CA88_BCAA_BA88; #10; assert(aluOut == B);
+      A = ~A;       B = ~B;        #10; assert(aluOut == B);
 
       ctrl = ALU_ADD;
       A = 64'h0000_0000_0000_0001; // Simple addition
@@ -66,7 +67,7 @@ module alu64_testbench ();
       assert(aluOut == 64'h8000_0000_0000_0000 && cOut == 1'b0);
 
       A = 64'hFFFF_FFFF_FFFF_FFFF; // Carry through
-      B = 16'h0000_0000_0000_0001; #10;
+      B = 64'h0000_0000_0000_0001; #10;
       assert(aluOut == 64'h0000_0000_0000_0000 && cOut == 1'b1);
 
       A = 64'hFFFF_CCAA_BCBC_88CA; // Carry out
@@ -128,4 +129,5 @@ module alu64_testbench ();
       A = 64'hAAAA_AAAA_AAAA_AAAA;
       B = 64'h5555_5555_5555_5555; #10;
       assert(aluOut == (A ^ B));
+   end
 endmodule
