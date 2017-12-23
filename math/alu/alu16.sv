@@ -63,7 +63,7 @@ module alu16_testbench ();
       A = 16'h7FFF; B = 16'h0001; #10; // Carry to top bit
       assert(aluOut == 16'h8000 && cOut == 1'b0);
 
-      A = 16'hFFFF; B = 4'h0001; #10; // Carry through
+      A = 16'hFFFF; B = 16'h0001; #10; // Carry through
       assert(aluOut == 16'h0000 && cOut == 1'b1);
 
       A = 16'hC000; B = 16'h4CA8; #10; // Carry out
