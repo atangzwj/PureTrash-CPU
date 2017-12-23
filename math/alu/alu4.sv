@@ -3,6 +3,7 @@
 module alu4 (
    output logic [3:0] aluOut,
    output logic       cOut,
+   output logic       cInMSB,
    output logic       pg,
    output logic       gg,
    input  logic [3:0] A,
@@ -13,6 +14,8 @@ module alu4 (
 
    logic [3:0] p, g, c;
    assign c[0] = cIn;
+
+   assign cInMSB = c[3];
 
    genvar i;
    generate

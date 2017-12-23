@@ -3,6 +3,7 @@
 module alu16 (
    output logic [15:0] aluOut,
    output logic        cOut,
+   output logic        cInMSB,
    output logic        pg,
    output logic        gg,
    input  logic [15:0] A,
@@ -11,8 +12,10 @@ module alu16 (
    input  logic  [2:0] ctrl
 );
 
-   logic [3:0] p, g, c;
+   logic [3:0] p, g, c, cInsMSB;
    assign c[0] = cIn;
+
+   assign cInMSB = cInsMSB[3];
 
    genvar i;
    generate
@@ -20,6 +23,7 @@ module alu16 (
          alu4 alu4 (
             .aluOut(aluOut[(4*i+3):(4*i)]),
             .cOut(),
+            .cInMSB(cInsMSB[i]),
             .pg(p[i]),
             .gg(g[i]),
             .A(A[(4*i+3):(4*i)]),
